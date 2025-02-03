@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  nome      String
+  cpfCnpj   String   @unique
+  type      Type     @default(Common)
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+ 
+  wallets   Wallet[] @relation("WalletOwner")
+
+  @@map("users")
+}
+
+enum Type {
+  Common
+  Retailer
+}
+
+model walletTransaction {
+  id Int  @id @default(autoincrement())
+  payee  Wallet  @relation(name: "PayeeTransaction", fields: [payeeId], references: [id])
+  payer Wallet   @relation(name:   "PayerTransaction", fields: [payerId], references: [id])
+  value Float
+  payeeId Int
+  payerId Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("wallet_transactions")
+}
+
+model Wallet {
+  id         Int      @id @default(autoincrement())
+  ownerId    Int
+  owner      User     @relation(name: "WalletOwner", fields: [ownerId], references: [id])
+  balance    Float    @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  
+  transactionsSent      walletTransaction[] @relation(name: "PayerTransaction")
+  transactionsReceived  walletTransaction[] @relation(name: "PayeeTransaction")
+
+  @@map("wallets")
+}
