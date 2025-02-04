@@ -1,5 +1,5 @@
 import { prisma } from "../../../../prisma/client";
-import { CreateDepositDTO } from "../dtos/CreateDepositDTO";
+import { CreateDepositDTO } from "../../dtos/CreateDepositDTO";
 
 export class CreateDepositUseCase {
     async execute({ balance, id }: CreateDepositDTO) {

@@ -1,5 +1,5 @@
 import { prisma} from "../../../../prisma/client"; 
-import { CreateWalletDTO } from "../dtos/CreateWalletDTO";
+import { CreateWalletDTO } from "../../dtos/CreateWalletDTO";
 import { PrismaClient } from '@prisma/client'
 
 const prismaC = new PrismaClient()
