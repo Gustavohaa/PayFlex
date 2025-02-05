@@ -27,7 +27,7 @@ PayFlex Solutions is a simplified payment platform. It allows users to deposit a
 
 -  docker-compose up -d
 
-### 3 Then, once the containers are running, you can execute the following command to run the Prisma migrations:
+### 3- Then, once the containers are running, you can execute the following command to run the Prisma migrations:
 
 - docker exec -it payFlex_backend npx prisma migrate dev --name init
 
