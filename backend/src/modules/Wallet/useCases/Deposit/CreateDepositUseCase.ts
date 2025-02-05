@@ -8,11 +8,11 @@ export class CreateDepositUseCase {
         });
 
         if (!walletExists) {
-            throw new Error("Carteira não encontrada");
+            throw new Error("Wallet not found");
         }
 
         if (balance <= 0) {
-            throw new Error("Valor do depósito deve ser maior do que 0");
+            throw new Error("The deposit value must be greater than zero");
         }
 
         const updatedBalance = walletExists.balance + balance;
