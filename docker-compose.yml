@@ -2,13 +2,17 @@ version: '3'
 
 services:
   backend:
-    build: ./backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
     ports: 
       - "3001:3001"
     environment:
       - DATABASE_URL=mysql://root:password@db:3306/PayFlex
+      - NODE_ENV=development
     volumes:
       - ./backend:/app-backend
+      - /app-backend/node_modules
     container_name: payFlex_backend
     restart: always
     depends_on:

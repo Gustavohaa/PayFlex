@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "prisma generate && ts-node-dev src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsnd ."
+    "dev": "prisma generate && tsnd ."
   },
   "keywords": [],
   "author": "",
@@ -23,7 +23,6 @@
   "dependencies": {
     "@prisma/client": "^6.3.1",
     "axios": "^1.7.9",
-    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-async-errors": "^3.1.1",
