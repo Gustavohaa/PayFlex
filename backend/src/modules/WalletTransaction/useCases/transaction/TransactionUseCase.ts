@@ -10,7 +10,7 @@ export class TransactionUseCase {
     });
 
     if (!payerExists) {
-      throw new Error("Carteira de origem não encontrada");
+      throw new Error("Payer wallet not found");
     }
 
     const payeeExists = await prisma.wallet.findFirst({
@@ -18,22 +18,22 @@ export class TransactionUseCase {
     });
 
     if (!payeeExists) {
-      throw new Error("Carteira de destino não encontrada");
+      throw new Error("Payee wallet not found");
     }
 
     if (payerExists.owner.type === "Retailer") {
-      throw new Error("Retailers não podem enviar dinheiro");
+      throw new Error("Retailers cannot send money");
     }
 
     if (payerExists.balance < value) {
-      throw new Error("Saldo insuficiente");
+      throw new Error(`The user ${payerExists.owner.nome} has insufficient balance`);
     }
 
     try {
       
       const authorizeResponse = await axios.get("https://util.devi.tools/api/v2/authorize");
       if (authorizeResponse.data.status !== "success") {
-        throw new Error("Transação não autorizada");
+        throw new Error("Unauthorized transaction");
       }
       
       return await prisma.$transaction(async (tx) => {
@@ -56,7 +56,7 @@ export class TransactionUseCase {
         });
       });
     } catch (error) {
-      throw new Error("Erro na transação");
+      throw new Error("Transaction error");
     }
   }
 }

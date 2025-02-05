@@ -1,33 +1,33 @@
-import { prisma  } from "../../../../prisma/client"; 
+import { prisma } from "../../../../prisma/client";
 import { CreateUserDTO } from "../../dtos/CreateUserDTO";
 
 
-export class CreateUserUseCase{
-    async execute ({name,email,cpfCnpj,password,type}: CreateUserDTO){
+export class CreateUserUseCase {
+    async execute({ name, email, cpfCnpj, password, type }: CreateUserDTO) {
 
         const cpfExists = await prisma.user.findFirst(
             {
-                where: {cpfCnpj}
+                where: { cpfCnpj }
             }
         );
 
-        if(cpfExists){
-            throw new Error("Esse cpf já foi cadastrado")
+        if (cpfExists) {
+            throw new Error("CPF has already been registered")
         }
 
         const emailExists = await prisma.user.findFirst(
             {
-                where: {email}
+                where: { email }
             }
         );
 
-        if(emailExists){
-            throw new Error("Esse e-mail já foi cadastrado")
+        if (emailExists) {
+            throw new Error("email has already been registered")
         }
 
         const user = await prisma.user.create(
             {
-                data:{
+                data: {
                     nome: name,
                     email: email,
                     cpfCnpj: cpfCnpj,

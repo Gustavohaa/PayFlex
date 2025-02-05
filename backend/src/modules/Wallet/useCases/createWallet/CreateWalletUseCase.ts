@@ -15,11 +15,11 @@ export class CreateWalletUseCase{
         );
 
         if(!userExists){
-            throw new Error("Usuário não existe")
+            throw new Error("User does not exist")
         }
 
         if(userExists.wallets.length > 0){
-            throw new Error("Carteira já existe") 
+            throw new Error(`User: ${userExists.nome} already has a wallet`) 
         }
 
         const wallet = await prisma.wallet.create(
